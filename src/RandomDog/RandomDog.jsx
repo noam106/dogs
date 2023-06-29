@@ -1,14 +1,19 @@
 import { Button } from "@mui/material"
 import DogImage from "../DogImage/DogImage"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import axios from 'axios'
 import { CircularProgress } from '@mui/material';
 
 const URL = "https://random.dog/woof.json"
 
-const RandomDog =  () =>{
-    const [url, setUrl] = useState(null)
+const RandomDog =  ({url, setUrl}) =>{
+    // const [url, setUrl] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+    useEffect(() => {
+        const fetchData = async () =>{
+            await handleShowClick()
+        }
+        fetchData()}, [])
     const handleShowClick = async () => {
     let dogUrl = null
     setIsLoading(true)
@@ -19,8 +24,10 @@ const RandomDog =  () =>{
     } while ( ! (dogUrl.endsWith('jpg') || dogUrl.endsWith('jpeg') || dogUrl.endsWith('png') || dogUrl.endsWith('JPG')))
         setUrl(dogUrl)
         // setIsLoading(false)
-
+    
     }
+    
+
     return(
         <>
         <Button onClick={handleShowClick} variant="outlined">SHOW ME A DOG</Button>
